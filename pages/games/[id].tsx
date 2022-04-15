@@ -53,6 +53,17 @@ export default function Game(id: IProps) {
   const [game, setGame] = useState<IGame | null>(null);
   const winner = !!game && checkWinner(game.board);
   const [blockUserMove, setBlockUserMove] = useState(true);
+  const [copied, setCopied] = useState(false);
+
+  const copyURL = () => {
+    const el = document.createElement("input");
+    el.value = window.location.href;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    setCopied(true);
+  };
 
   useEffect(() => {
     const ref = database.ref(`games/${id.id}`);
@@ -64,10 +75,6 @@ export default function Game(id: IProps) {
 
     return () => ref.off(); //.off() => stop listening for changes
   }, [id]);
-
-  useEffect(() => {
-    console.log(`user can play: ${blockUserMove}`);
-  }, [blockUserMove]);
 
   const saveMove = (rowIndex: number, colIndex: number) => {
     if (!game) return;
@@ -114,21 +121,28 @@ export default function Game(id: IProps) {
           );
         })}
       </div>
-      <button
-        onClick={() => {
-          const gameCopy = { ...game };
-          gameCopy.board = [
-            ["", "", ""],
-            ["", "", ""],
-            ["", "", ""],
-          ];
-          gameCopy.first = gameCopy.first === "player1" ? "player2" : "player1";
-          gameCopy.turn = gameCopy.first;
-          database.ref(`games/${id.id}`).set(gameCopy);
-        }}
-      >
-        Reset
-      </button>
+      <div className="button-container">
+        <button
+          className="btns"
+          onClick={() => {
+            const gameCopy = { ...game };
+            gameCopy.board = [
+              ["", "", ""],
+              ["", "", ""],
+              ["", "", ""],
+            ];
+            gameCopy.first =
+              gameCopy.first === "player1" ? "player2" : "player1";
+            gameCopy.turn = gameCopy.first;
+            database.ref(`games/${id.id}`).set(gameCopy);
+          }}
+        >
+          Reset
+        </button>
+        <button className="btns" onClick={copyURL}>
+          {!copied ? "Copy link" : "Copied!"}
+        </button>
+      </div>
     </main>
   );
 }

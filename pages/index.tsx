@@ -11,11 +11,9 @@ const Home: NextPage = () => {
   const router = useRouter();
   return (
     <div>
-      <h4>
-        Welcome to the Tic-Tac-Toe battle field! You can invite anybody with an
-        internet access and show them you're a Tic-Tac-Toe beast!
-      </h4>
       <main>
+        <h4>Welcome to the Tic-Tac-Toe game!</h4>
+        <p>Create a game and share the URL with your buddy.</p>
         <form
           onSubmit={(e) => {
             e.preventDefault();
