@@ -46,7 +46,7 @@ const Home: NextPage = () => {
             value={player2}
             onChange={(e) => setPlayer2(e.target.value)}
           />
-          <button type="submit">Let's play!</button>
+          <button type="submit">Play!</button>
         </form>
       </main>{" "}
     </div>

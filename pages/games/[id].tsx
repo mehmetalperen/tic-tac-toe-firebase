@@ -93,10 +93,10 @@ export default function Game(id: IProps) {
     <main>
       {winner ? (
         <h1>
-          Winner's {game.turn === "player1" ? game.player2 : game.player1}
+          Winner is {game.turn === "player1" ? game.player2 : game.player1}
         </h1>
       ) : (
-        <h1>{game.turn === "player1" ? game.player1 : game.player2}'s Turn</h1>
+        <h1>{game.turn === "player1" ? game.player1 : game.player2} Turn</h1>
       )}
       <div className="board">
         {game.board.map((row, rowIndex) => {
